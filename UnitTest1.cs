@@ -10,9 +10,10 @@ namespace SCD_SalaryIncrease
 		}
 
 		[Test]
-		public void Test1()
+		public void HasAppropriateInterface()
 		{
-			Assert.Pass();
+			object actual = new EmployeeSalaryIncrease();
+			Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);			
 		}
 	}
 }
