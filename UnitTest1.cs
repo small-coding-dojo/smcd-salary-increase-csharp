@@ -4,29 +4,33 @@ using Moq;
 
 namespace SCD_SalaryIncrease
 {
-	public class Tests
-	{
+    public class Tests
+    {
+        [Test]
+        public void HasAppropriateInterface()
+        {
+            var actual = new EmployeeSalaryIncrease(Mock.Of<INotify>());
+            Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);
+        }
 
-		[Test]
-		public void HasAppropriateInterface()
-		{
-			object actual = new EmployeeSalaryIncrease();
-			Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);			
-		}
-		
-		[Test]
-		public void EmailIsNull_ThrowsArgumentException()
-		{
-			IEmployeeSalaryIncrease actual = new EmployeeSalaryIncrease();
-			Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
-		}
+
+        [Test]
+        public void EmailIsNull_ThrowsArgumentException()
+        {
+            var actual = new EmployeeSalaryIncrease(Mock.Of<INotify>());
+            Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
+        }
 
         [Test]
         public void GetSuccessNotificationOnManualSalaryIncrease()
         {
-            IEmployeeSalaryIncrease actual = new EmployeeSalaryIncrease();
             var notifyMock = new Mock<INotify>();
-			notifyMock.Verify(x => x.NotifySuccess("{email} salary is manually increased {percent} successfully."));
+            var actual = new EmployeeSalaryIncrease(notifyMock.Object);
+            const string expected = "someone@example.com salary is manually increased 45 successfully.";
+
+            actual.IncreaseSalaryByEmail("someone@example.com", 45);
+
+            notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
         }
-	}
+    }
 }
