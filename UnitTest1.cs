@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using Moq;
 
 namespace SCD_SalaryIncrease
 {
@@ -19,5 +20,13 @@ namespace SCD_SalaryIncrease
 			IEmployeeSalaryIncrease actual = new EmployeeSalaryIncrease();
 			Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
 		}
+
+        [Test]
+        public void GetSuccessNotificationOnManualSalaryIncrease()
+        {
+            IEmployeeSalaryIncrease actual = new EmployeeSalaryIncrease();
+            var notifyMock = new Mock<INotify>();
+			notifyMock.Verify(x => x.NotifySuccess("{email} salary is manually increased {percent} successfully."));
+        }
 	}
 }
