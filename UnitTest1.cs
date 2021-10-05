@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace SCD_SalaryIncrease
@@ -13,12 +14,10 @@ namespace SCD_SalaryIncrease
 		}
 		
 		[Test]
-		public void Test2()
+		public void EmailIsNull_ThrowsArgumentException()
 		{
 			IEmployeeSalaryIncrease actual = new EmployeeSalaryIncrease();
-			actual.IncreaseSalaryByEmail(null, null);
-
-			Assert.Pass();			
+			Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
 		}
 	}
 }
