@@ -6,10 +6,18 @@ namespace SCD_SalaryIncrease
 {
     public class Tests
     {
+        private Mock<INotify> _notifyMock;
+        
+        [SetUp]
+        public void setup()
+        {
+            _notifyMock = new Mock<INotify>();
+        }
+
         [Test]
         public void HasAppropriateInterface()
         {
-            var actual = new EmployeeSalaryIncrease(Mock.Of<INotify>());
+            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
             Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);
         }
 
@@ -17,7 +25,7 @@ namespace SCD_SalaryIncrease
         [Test]
         public void EmailIsNull_ThrowsArgumentException()
         {
-            var actual = new EmployeeSalaryIncrease(Mock.Of<INotify>());
+            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
             Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
         }
 
