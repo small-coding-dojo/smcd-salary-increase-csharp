@@ -8,7 +8,6 @@
 
 		public void IncreaseSalaryByEmail(string email, decimal? salaryIncrease = null)
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 }
