@@ -51,7 +51,9 @@ namespace SCD_SalaryIncrease
 			// given an employee with a salary of 1000 and the email address hugo@example.com
 
 			// when calling increaseSalaryByEmail on that employee with an increase of 45
-			
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, employeeRepositoryMock.Object);
+            actual.IncreaseSalaryByEmail("hugo@example.com", 45);
+
 			// then the salary of the employee is updated to 1450
 
 			employeeRepositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
