@@ -43,19 +43,16 @@ namespace SCD_SalaryIncrease
         [Test]
         public void ManualSalaryIncreaseInvokesRepositoryInsert()
         {
-            // given an emplyee with a salary of 1000 and the email address hugo@example.com
+            // given an employee with a salary of 1000 and the email address hugo@example.com
 
-            // when calling TncreaseSalaryByEmail on that employee with an increate of 45
+            // when calling increaseSalaryByEmail on that employee with an increase of 45
 
             // then the salary of the employee is updated to 1450
+
+            Mock<IRepository<Employee>> employeeRepositoryMock = new Mock<IRepository<Employee>>();
+            Employee expectedEmployee = null;
+            employeeRepositoryMock.Verify(m => m.Update(expectedEmployee), Times.Once);
             
-
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
-            const string expected = "someone@example.com salary is manually increased 45 successfully.";
-
-            actual.IncreaseSalaryByEmail("someone@example.com", 45);
-
-            _notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
         }
     }
 }
