@@ -50,8 +50,13 @@ namespace SCD_SalaryIncrease
             // then the salary of the employee is updated to 1450
 
             Mock<IRepository<Employee>> employeeRepositoryMock = new Mock<IRepository<Employee>>();
-            Employee expectedEmployee = null;
-            employeeRepositoryMock.Verify(m => m.Update(expectedEmployee), Times.Once);
+            Employee updatedEmployeeValues = new Employee()
+            {
+                Id = 1,
+                CurrentSalary = 1450,
+                Email = "hugo@example.com"
+            };
+            employeeRepositoryMock.Verify(m => m.Update(updatedEmployeeValues), Times.Once);
             
         }
     }
