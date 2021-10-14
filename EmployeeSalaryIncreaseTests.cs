@@ -4,7 +4,7 @@ using Moq;
 
 namespace SCD_SalaryIncrease
 {
-    public class Tests
+    public class EmployeeSalaryIncreaseTests
     {
         private Mock<INotify> _notifyMock;
         
@@ -32,13 +32,12 @@ namespace SCD_SalaryIncrease
         [Test]
         public void GetSuccessNotificationOnManualSalaryIncrease()
         {
-            var notifyMock = new Mock<INotify>();
-            var actual = new EmployeeSalaryIncrease(notifyMock.Object);
+            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
             const string expected = "someone@example.com salary is manually increased 45 successfully.";
 
             actual.IncreaseSalaryByEmail("someone@example.com", 45);
 
-            notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
+            _notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
         }
     }
 }
