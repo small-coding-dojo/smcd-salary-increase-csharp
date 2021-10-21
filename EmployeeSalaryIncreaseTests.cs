@@ -49,7 +49,7 @@ namespace SCD_SalaryIncrease
 		}
 
 		[Test]
-		public void ManualSalaryIncreaseInvokesRepositoryInsert()
+		public void ManualSalaryIncreaseBy45PercentInvokesRepositoryInsert()
 		{
 			Employee captured = null;
 
@@ -68,28 +68,18 @@ namespace SCD_SalaryIncrease
 		}
 
 		[Test]
-		public void ManualSalaryIncreaseInvokesRepositoryInsert_Duplicated()
+		public void ManualSalaryIncreaseBy30PercentInvokesRepositoryInsert()
 		{
 			Employee captured = null;
-			var employeeRepositoryMock = new Mock<IRepository<Employee>>();
-			employeeRepositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
-
-			// given an employee with a salary of 1000 and the email address hugo@example.com
-			var employee = new Employee
-			{
-				CurrentSalary = 1000,
-				Email = "hugo@example.com"
-			};
-			employeeRepositoryMock.Setup(x => x.Get(It.IsAny<Expression<Func<Employee, bool>>>()))
-				.Returns(new List<Employee> { employee });
+			_repositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
 
 			// when calling increaseSalaryByEmail on that employee with an increase of 30
-			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, employeeRepositoryMock.Object);
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
 			actual.IncreaseSalaryByEmail("hugo@example.com", 30);
 
 			// then the salary of the employee is updated to 1300
 
-			employeeRepositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
+			_repositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
 			captured.CurrentSalary.Should().Be(1300);
 		}
 	}
