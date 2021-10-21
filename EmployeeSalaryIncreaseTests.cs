@@ -7,87 +7,90 @@ using FluentAssertions;
 
 namespace SCD_SalaryIncrease
 {
-    public class EmployeeSalaryIncreaseTests
-    {
-        private Mock<INotify> _notifyMock;
-        private Mock<IRepository<Employee>> _repositoryMock;
+	public class EmployeeSalaryIncreaseTests
+	{
+		private Mock<INotify> _notifyMock;
+		private Mock<IRepository<Employee>> _repositoryMock;
 
-        [SetUp]
-        public void setup()
-        {
-            _notifyMock = new Mock<INotify>();
-            _repositoryMock = new Mock<IRepository<Employee>>();
-        }
+		[SetUp]
+		public void setup()
+		{
+			_notifyMock = new Mock<INotify>();
+			_repositoryMock = new Mock<IRepository<Employee>>();
 
-        [Test]
-        public void HasAppropriateInterface()
-        {
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
-            Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);
-        }
+			_repositoryMock.Setup(x => x.Get(It.IsAny<Expression<Func<Employee, bool>>>()))
+				.Returns(new List<Employee> { new Employee() { CurrentSalary = 1000, Email = "hugo@example.com" } });
+		}
+
+		[Test]
+		public void HasAppropriateInterface()
+		{
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
+			Assert.IsInstanceOf<IEmployeeSalaryIncrease>(actual);
+		}
 
 
-        [Test]
-        public void EmailIsNull_ThrowsArgumentException()
-        {
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
-            Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
-        }
+		[Test]
+		public void EmailIsNull_ThrowsArgumentException()
+		{
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
+			Assert.Throws<ArgumentException>(() => actual.IncreaseSalaryByEmail(null, null));
+		}
 
-        [Test]
-        public void GetSuccessNotificationOnManualSalaryIncrease()
-        {
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
-            const string expected = "someone@example.com salary is manually increased 45 successfully.";
+		[Test]
+		public void GetSuccessNotificationOnManualSalaryIncrease()
+		{
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
+			const string expected = "someone@example.com salary is manually increased 45 successfully.";
 
-            actual.IncreaseSalaryByEmail("someone@example.com", 45);
+			actual.IncreaseSalaryByEmail("hugo@example.com", 45);
 
-            _notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
-        }
+			_notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
+		}
 
-        [Test]
-        public void ManualSalaryIncreaseInvokesRepositoryInsert()
-        {
-            Employee captured = null;
-            var employeeRepositoryMock = new Mock<IRepository<Employee>>();
-            employeeRepositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
+		[Test]
+		public void ManualSalaryIncreaseInvokesRepositoryInsert()
+		{
+			Employee captured = null;
 
-            // given an employee with a salary of 1000 and the email address hugo@example.com
+			_repositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
 
-            // when calling increaseSalaryByEmail on that employee with an increase of 45
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object, employeeRepositoryMock.Object);
-            actual.IncreaseSalaryByEmail("hugo@example.com", 45);
+			// given an employee with a salary of 1000 and the email address hugo@example.com
 
-            // then the salary of the employee is updated to 1450
+			// when calling increaseSalaryByEmail on that employee with an increase of 45
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
+			actual.IncreaseSalaryByEmail("hugo@example.com", 45);
 
-            employeeRepositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
-            captured.CurrentSalary.Should().Be(1450);
-        }
+			// then the salary of the employee is updated to 1450
 
-        [Test]
-        public void ManualSalaryIncreaseInvokesRepositoryInsert_Duplicated()
-        {
-            Employee captured = null;
-            var employeeRepositoryMock = new Mock<IRepository<Employee>>();
-            employeeRepositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
+			_repositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
+			captured.CurrentSalary.Should().Be(1450);
+		}
 
-            // given an employee with a salary of 1000 and the email address hugo@example.com
-            var employee = new Employee
-            {
-                CurrentSalary = 1000,
-                Email = "hugo@example.com"
-            };
-            employeeRepositoryMock.Setup(x => x.Get(It.IsAny<Expression<Func<Employee, bool>>>()))
-                .Returns(new List<Employee> { employee });
+		[Test]
+		public void ManualSalaryIncreaseInvokesRepositoryInsert_Duplicated()
+		{
+			Employee captured = null;
+			var employeeRepositoryMock = new Mock<IRepository<Employee>>();
+			employeeRepositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
 
-            // when calling increaseSalaryByEmail on that employee with an increase of 30
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object, employeeRepositoryMock.Object);
-            actual.IncreaseSalaryByEmail("hugo@example.com", 30);
+			// given an employee with a salary of 1000 and the email address hugo@example.com
+			var employee = new Employee
+			{
+				CurrentSalary = 1000,
+				Email = "hugo@example.com"
+			};
+			employeeRepositoryMock.Setup(x => x.Get(It.IsAny<Expression<Func<Employee, bool>>>()))
+				.Returns(new List<Employee> { employee });
 
-            // then the salary of the employee is updated to 1300
+			// when calling increaseSalaryByEmail on that employee with an increase of 30
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, employeeRepositoryMock.Object);
+			actual.IncreaseSalaryByEmail("hugo@example.com", 30);
 
-            employeeRepositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
-            captured.CurrentSalary.Should().Be(1300);
-        }
-    }
+			// then the salary of the employee is updated to 1300
+
+			employeeRepositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
+			captured.CurrentSalary.Should().Be(1300);
+		}
+	}
 }

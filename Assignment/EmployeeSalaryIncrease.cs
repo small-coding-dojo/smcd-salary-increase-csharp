@@ -33,7 +33,7 @@ namespace SCD_SalaryIncrease
 			var employees = _employeeRepository.Get(null);
 			var employee = employees.First();
 
-			var salary = employee.CurrentSalary * percent;
+			var salary = employee.CurrentSalary * (1 + percent / 100);
 			if (_employeeRepository != null)
 			{
 				_employeeRepository.Update(new Employee { CurrentSalary = salary.Value, Email = email });
