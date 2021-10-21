@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualBasic;
 using Moq;
 
@@ -29,10 +30,13 @@ namespace SCD_SalaryIncrease
 				throw new ArgumentException(nameof(email));
 			}
 
-			var salary = 1450;
+			var employees = _employeeRepository.Get(null);
+			var employee = employees.First();
+
+			var salary = employee.CurrentSalary * percent;
 			if (_employeeRepository != null)
 			{
-				_employeeRepository.Update(new Employee { CurrentSalary = salary, Email = email });
+				_employeeRepository.Update(new Employee { CurrentSalary = salary.Value, Email = email });
 			}
 
 			_notify.NotifySuccess($"{email} salary is manually increased {percent} successfully.");
