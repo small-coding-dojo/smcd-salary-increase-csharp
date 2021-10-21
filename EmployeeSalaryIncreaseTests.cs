@@ -43,7 +43,7 @@ namespace SCD_SalaryIncrease
 			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
 			const string expected = "someone@example.com salary is manually increased 45 successfully.";
 
-			actual.IncreaseSalaryByEmail("hugo@example.com", 45);
+			actual.IncreaseSalaryByEmail("someone@example.com", 45);
 
 			_notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
 		}
