@@ -82,5 +82,16 @@ namespace SCD_SalaryIncrease
 			_repositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Once);
 			captured.CurrentSalary.Should().Be(1300);
 		}
+
+		[Test]
+		public void testIncreaseCeleryByPercentageDoesntThrowAnExceptionOnNullPercent()
+		{
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
+			actual.IncreaseSalaryByEmail("hugo@example.com", null);
+
+			Assert.Pass();
+			
+
+		}
 	}
 }

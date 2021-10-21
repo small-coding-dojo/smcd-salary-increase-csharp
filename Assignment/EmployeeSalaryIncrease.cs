@@ -32,6 +32,12 @@ namespace SCD_SalaryIncrease
 
 			var employees = _employeeRepository.Get(null);
 			var employee = employees.First();
+			/*
+			if( percent == 0 or isNull(percent))
+			{
+				ThrowNewNotImplementedException("Basing raises based on historical data not yet implemented");
+			}
+			*/
 
 			var salary = employee.CurrentSalary * (1 + percent / 100);
 			if (_employeeRepository != null)
