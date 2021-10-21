@@ -10,11 +10,13 @@ namespace SCD_SalaryIncrease
     public class EmployeeSalaryIncreaseTests
     {
         private Mock<INotify> _notifyMock;
+        private Mock<IRepository<Employee>> _repositoryMock;
 
         [SetUp]
         public void setup()
         {
             _notifyMock = new Mock<INotify>();
+            _repositoryMock = new Mock<IRepository<Employee>>();
         }
 
         [Test]
@@ -35,7 +37,7 @@ namespace SCD_SalaryIncrease
         [Test]
         public void GetSuccessNotificationOnManualSalaryIncrease()
         {
-            var actual = new EmployeeSalaryIncrease(_notifyMock.Object);
+            var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
             const string expected = "someone@example.com salary is manually increased 45 successfully.";
 
             actual.IncreaseSalaryByEmail("someone@example.com", 45);

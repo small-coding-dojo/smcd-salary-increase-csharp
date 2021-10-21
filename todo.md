@@ -1,6 +1,7 @@
 ﻿# Todo List
 
 - line 33 of EmployeeSalaryIncrease is _really_ ugly
+- Specify Test for the case where "EmployeeRepository".get doesn't return any Employees
 - make actual a field in the test class
 - remove single parameter constructor of EmployeeSalaryIncrease
 - care about _ in naming of test methods -> consistent naming
