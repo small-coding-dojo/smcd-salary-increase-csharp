@@ -87,10 +87,8 @@ namespace SCD_SalaryIncrease
 		public void testIncreaseCeleryByPercentageDoesntThrowAnExceptionOnNullPercent()
 		{
 			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
-			actual.IncreaseSalaryByEmail("hugo@example.com", null);
-
-			Assert.Pass();
-			
+			Assert.Throws<NotImplementedException>(
+				() => actual.IncreaseSalaryByEmail("hugo@example.com", null));
 
 		}
 	}
