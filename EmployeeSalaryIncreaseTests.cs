@@ -10,6 +10,7 @@ namespace SCD_SalaryIncrease
 {
 	public class TestEmployeeRepository : IRepository<Employee>
 	{
+		private List<Employee> _ourEmployees = new List<Employee>();
 
 		public Employee GetById(int id)
 		{
@@ -18,18 +19,36 @@ namespace SCD_SalaryIncrease
 
 		public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
 		{
-			return new List<Employee>(){ new Employee(){CurrentSalary = 1450, 
-				Email = "hugo@example.com", Id = 1} };
+			List<Employee> newList = new List<Employee>();
+			foreach (var employee in _ourEmployees)
+			{
+				newList.Add(cloneEmployee(employee));
+			}
+			return newList;
 		}
 
-		public Employee Update(Employee entity)
+		public Employee Update(Employee theEmployee)
 		{
-			return entity;
+			var toUpdate = _ourEmployees.Find(x => x.Id == theEmployee.Id);
+			_ourEmployees.Remove(toUpdate);
+			_ourEmployees.Add(cloneEmployee(theEmployee));
+			return cloneEmployee(_ourEmployees.First());
 		}
 
-		public Employee Insert(Employee entity)
+		private Employee cloneEmployee(Employee jangoFat)
 		{
-			throw new NotImplementedException();
+			return new Employee()
+			{
+				CurrentSalary = jangoFat.CurrentSalary,
+				Email = jangoFat.Email,
+				Id = jangoFat.Id
+			};
+		}
+
+		public Employee Insert(Employee newEmployee)
+		{
+			_ourEmployees.Add(cloneEmployee(newEmployee));
+			return cloneEmployee(newEmployee);
 		}
 
 		public void Insert(int id)
@@ -41,18 +60,32 @@ namespace SCD_SalaryIncrease
 	public class EmployeeSalaryIncreaseTestWithRepository
 	{
 		private Mock<INotify> _notifyMock;
+		private TestEmployeeRepository _testEmployeeRepository = new TestEmployeeRepository();
 
 		[SetUp]
 		public void setup()
 		{
 			_notifyMock = new Mock<INotify>();
+			_testEmployeeRepository = new TestEmployeeRepository();
+			_testEmployeeRepository.Insert(new Employee()
+			{
+				CurrentSalary = 1000, 
+				Email = "hugo@example.com",
+				Id = 1
+			});
+/*
+			{
+				CurrentSalary = 2000, 
+				Email = "emil@example.com",
+				Id = 2
+			});
+*/
 		}
 
 		[Test]
 		public void GetSuccessNotificationOnManualSalaryIncrease()
 		{
-			var testEmployeeRepository = new TestEmployeeRepository();
-			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, testEmployeeRepository);
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _testEmployeeRepository);
 			const string expected = "someone@example.com salary is manually increased 45 successfully.";
 
 			actual.IncreaseSalaryByEmail("someone@example.com", 45);
@@ -64,23 +97,42 @@ namespace SCD_SalaryIncrease
 		public void ManualSalaryIncreaseBy45PercentInvokesRepositoryInsert()
 		{
 			Employee captured = null;
-
-			var testEmployeeRepository = new TestEmployeeRepository();
 			
 			// given an employee with a salary of 1000 and the email address hugo@example.com
 
 			// when calling increaseSalaryByEmail on that employee with an increase of 45
-			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, testEmployeeRepository);
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _testEmployeeRepository);
 			actual.IncreaseSalaryByEmail("hugo@example.com", 45);
 
 			// then the salary of the employee is updated to 1450
 
 			Expression<Func<Employee, bool>> filterByIdEqualsOne = x => x.Id == 1;
 			
-			var res = testEmployeeRepository.Get(filterByIdEqualsOne);
+			var res = _testEmployeeRepository.Get(filterByIdEqualsOne);
 			captured = res.First();
 //            captured = testEmployeeRepository.Get(filterByIdEqualsOne);
 			captured.CurrentSalary.Should().Be(1450);
+		}
+		[Test]
+		public void ManualSalaryIncreaseBy35PercentInvokesRepositoryInsert()
+		{
+			Employee captured = null;
+
+			// given an employee with a salary of 1000 and the email address hugo@example.com
+
+			// when calling increaseSalaryByEmail on that employee with an increase of 45
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _testEmployeeRepository);
+			actual.IncreaseSalaryByEmail("emil@example.com", 35);
+
+			// then the salary of the employee is updated to 1450
+
+//			Expression<Func<Employee, bool>> filterByIdEqualsOne = x => x.Id == 1;
+			Expression<Func<Employee, bool>> filterByIdEqualsOne = x => x.Email == "emil@example.com";
+			
+			var res = _testEmployeeRepository.Get(filterByIdEqualsOne);
+			captured = res.First();
+//            captured = testEmployeeRepository.Get(filterByIdEqualsOne);
+			captured.CurrentSalary.Should().Be(1350);
 		}
 		
 	}
