@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using NUnit.Framework;
 using Moq;
@@ -7,6 +8,85 @@ using FluentAssertions;
 
 namespace SCD_SalaryIncrease
 {
+	public class TestEmployeeRepository : IRepository<Employee>
+	{
+
+		public Employee GetById(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
+		{
+			return new List<Employee>(){ new Employee(){CurrentSalary = 1450, 
+				Email = "hugo@example.com", Id = 1} };
+		}
+
+		public Employee Update(Employee entity)
+		{
+			return entity;
+		}
+
+		public Employee Insert(Employee entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Insert(int id)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public class EmployeeSalaryIncreaseTestWithRepository
+	{
+		private Mock<INotify> _notifyMock;
+
+		[SetUp]
+		public void setup()
+		{
+			_notifyMock = new Mock<INotify>();
+		}
+
+		[Test]
+		public void GetSuccessNotificationOnManualSalaryIncrease()
+		{
+			var testEmployeeRepository = new TestEmployeeRepository();
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, testEmployeeRepository);
+			const string expected = "someone@example.com salary is manually increased 45 successfully.";
+
+			actual.IncreaseSalaryByEmail("someone@example.com", 45);
+
+			_notifyMock.Verify(x => x.NotifySuccess(expected), Times.Once);
+		}
+		
+		[Test]
+		public void ManualSalaryIncreaseBy45PercentInvokesRepositoryInsert()
+		{
+			Employee captured = null;
+
+			var testEmployeeRepository = new TestEmployeeRepository();
+			
+			// given an employee with a salary of 1000 and the email address hugo@example.com
+
+			// when calling increaseSalaryByEmail on that employee with an increase of 45
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, testEmployeeRepository);
+			actual.IncreaseSalaryByEmail("hugo@example.com", 45);
+
+			// then the salary of the employee is updated to 1450
+
+			Expression<Func<Employee, bool>> filterByIdEqualsOne = x => x.Id == 1;
+			
+			var res = testEmployeeRepository.Get(filterByIdEqualsOne);
+			captured = res.First();
+//            captured = testEmployeeRepository.Get(filterByIdEqualsOne);
+			captured.CurrentSalary.Should().Be(1450);
+		}
+		
+	}
+	
+	
+
 	public class EmployeeSalaryIncreaseTests
 	{
 		private Mock<INotify> _notifyMock;
