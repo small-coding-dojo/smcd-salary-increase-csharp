@@ -25,12 +25,18 @@ namespace SCD_SalaryIncrease
                 }
                 return newList;
             }
-
-            Func<Employee, bool> func = filter.Compile();
-            foreach (var employee in _ourEmployees.FindAll(func.Invoke))
+            
+           
+            Func<Employee, bool> filterFunction = filter.Compile();
+           
+            foreach (var employee in _ourEmployees)
             {
-                newList.Add(cloneEmployee(employee));
+                if (filterFunction.Invoke(employee))
+                {
+                    newList.Add(cloneEmployee(employee));
+                }
             }
+
             return newList;
         }
 
@@ -61,6 +67,14 @@ namespace SCD_SalaryIncrease
         public void Insert(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public Employee GetByEmail(string email)
+        {
+            Expression<Func<Employee, bool>> filterByIdEqualsOne = x => x.Email == email;
+
+            var res = this.Get(filterByIdEqualsOne); 
+            return res.First();
         }
     }
 }
