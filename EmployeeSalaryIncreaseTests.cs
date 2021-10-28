@@ -89,7 +89,6 @@ namespace SCD_SalaryIncrease
 			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
 			Assert.Throws<NotImplementedException>(
 				() => actual.IncreaseSalaryByEmail("hugo@example.com", null));
-
 		}
 	}
 }
