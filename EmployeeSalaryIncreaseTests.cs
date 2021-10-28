@@ -68,6 +68,25 @@ namespace SCD_SalaryIncrease
 		}
 
 		[Test]
+		public void ManualSalaryIncreaseForUnknownEmilBy45PercentDoesNotInvokeRepositoryUpdate()
+		{
+			Employee captured = null;
+
+			_repositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
+
+			// given the employee with email address emil@example.com is not present in the table
+
+			// when calling increaseSalaryByEmail on that employee with an increase of 45
+			var actual = new EmployeeSalaryIncrease(_notifyMock.Object, _repositoryMock.Object);
+			actual.IncreaseSalaryByEmail("emil@example.com", 45);
+
+			// then a Notification for fail with text '{email} salary is NOT increased successfully.' is issued
+
+			captured.CurrentSalary.Should().Be(1000);
+			_repositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Never);
+		}
+
+		[Test]
 		public void ManualSalaryIncreaseBy30PercentInvokesRepositoryInsert()
 		{
 			Employee captured = null;
