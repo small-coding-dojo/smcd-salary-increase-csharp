@@ -33,19 +33,22 @@ namespace SCD_SalaryIncrease
 
 			Expression<Func<Employee, bool>> filter = employee => employee.Email == email; 
 			var employees = _employeeRepository.Get(filter);
-			var employee = employees.First();
 			
-			if(!percent.HasValue)
-			{
-				throw new NotImplementedException("Basing raises based on historical data not yet implemented");
+			if ( employees.Any() ) {
+				var employee = employees.First(); 
+				
+				if(!percent.HasValue)
+				{
+					throw new NotImplementedException("Basing raises based on historical data not yet implemented");
+				}
+
+				var increase = employee.CurrentSalary * (percent.Value / 100);
+				employee.CurrentSalary += increase;
+
+				_employeeRepository?.Update(employee);
+
+				_notify.NotifySuccess($"{email} salary is manually increased {percent} successfully.");
 			}
-
-			var increase = employee.CurrentSalary * (percent.Value / 100);
-			employee.CurrentSalary += increase;
-
-			_employeeRepository?.Update(employee);
-
-			_notify.NotifySuccess($"{email} salary is manually increased {percent} successfully.");
 		}
 	}
 }
