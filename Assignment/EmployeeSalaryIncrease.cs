@@ -32,7 +32,7 @@ namespace SCD_SalaryIncrease
 			}
 
 			Expression<Func<Employee, bool>> filter = employee => employee.Email == email; 
-			var employees = _employeeRepository.Get(null);
+			var employees = _employeeRepository.Get(filter);
 			var employee = employees.First();
 			
 			if(!percent.HasValue)

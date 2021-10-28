@@ -20,6 +20,7 @@ namespace SCD_SalaryIncrease
 
 			_repositoryMock.Setup(x => x.Get(It.IsAny<Expression<Func<Employee, bool>>>()))
 				.Returns(new List<Employee> { new Employee() { CurrentSalary = 1000, Email = "hugo@example.com" } });
+			
 		}
 
 		[Test]
@@ -73,6 +74,9 @@ namespace SCD_SalaryIncrease
 			Employee captured = null;
 
 			_repositoryMock.Setup(m => m.Update(It.IsAny<Employee>())).Callback<Employee>(emp => captured = emp);
+
+            _repositoryMock.Setup(x => x.Get(employee => employee.Email == "emil@example.com"))
+                .Returns(new List<Employee> { });
 
 			// given the employee with email address emil@example.com is not present in the table
 
