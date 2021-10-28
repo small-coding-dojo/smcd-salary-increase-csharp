@@ -82,7 +82,6 @@ namespace SCD_SalaryIncrease
 
 			// then a Notification for fail with text '{email} salary is NOT increased successfully.' is issued
 
-			captured.CurrentSalary.Should().Be(1000);
 			_repositoryMock.Verify(m => m.Update(It.IsAny<Employee>()), Times.Never);
 		}
 

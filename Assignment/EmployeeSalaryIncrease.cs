@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.VisualBasic;
 using Moq;
 
@@ -30,6 +31,7 @@ namespace SCD_SalaryIncrease
 				throw new ArgumentException(nameof(email));
 			}
 
+			Expression<Func<Employee, bool>> filter = employee => employee.Email == email; 
 			var employees = _employeeRepository.Get(null);
 			var employee = employees.First();
 			
