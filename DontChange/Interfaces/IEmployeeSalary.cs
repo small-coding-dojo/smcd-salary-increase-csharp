@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace SCD_SalaryIncrease
 {
-	public class Employee : IDbEntity
+	public interface IEmployeeSalary : IDbEntity
 	{
-		public int Id { get; set; }
-		public string Email { get; set; }
-		public decimal CurrentSalary { get; set; }
-		//... more
+		string Email { get; set; }
+		decimal CurrentSalary { get; set; }
 	}
 }

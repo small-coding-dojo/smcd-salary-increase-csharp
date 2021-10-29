@@ -10,9 +10,8 @@ namespace SCD_SalaryIncrease
 	public interface IRepository<Entity> where Entity : IDbEntity
 	{
 		Entity GetById(int id);
-		IEnumerable<Entity> Get(Expression<Func<Entity, bool>> filter);
+		IEnumerable<Entity> Get(Func<Entity, bool> filter);
 		Entity Update(Entity entity);
 		Entity Insert(Entity entity);
-		void Insert(int id);
 	}
 }
