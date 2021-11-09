@@ -116,7 +116,12 @@ namespace SCD_SalaryIncrease
         [Test]
         public void testFilterIsUsed()
         {
-
+	        // Given there is an employee with email "imbored@example.com" and id "1"
+	        // And there is an employee with email "horst@example.com" and id "2"
+	        // When I Increase the Salary for "impored@example.com" by "20" percent
+	        // Then "hosrst@example.com" salary is not changed
+	        // And "imbored@example.com" salary is ""
+	        captured.Email.Should().Be("imbored@example.com");
         }
 	}
 }
