@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCD-SalaryIncrease", "SCD-SalaryIncrease.csproj", "{C3D4018F-EE13-417B-8315-80F0A129E04B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCD-SalaryIncrease", "SalaryIncrease\SCD-SalaryIncrease.csproj", "{C3D4018F-EE13-417B-8315-80F0A129E04B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowProject", "SpecFlowProject\SpecFlowProject.csproj", "{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}"
 EndProject

@@ -16,16 +16,4 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="SpecFlowProject\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="SpecFlowProject\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="SpecFlowProject\**" />
-  </ItemGroup>
-
 </Project>
