@@ -1,5 +1,6 @@
 ﻿# Todo List
 
+- Check if the filter is applied.
 - Specify Test for the case where "EmployeeRepository".get doesn't return any Employees
 - make actual a field in the test class
 - remove single parameter constructor of EmployeeSalaryIncrease

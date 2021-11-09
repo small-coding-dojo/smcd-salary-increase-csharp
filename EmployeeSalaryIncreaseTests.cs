@@ -112,5 +112,11 @@ namespace SCD_SalaryIncrease
 			Assert.Throws<NotImplementedException>(
 				() => actual.IncreaseSalaryByEmail("hugo@example.com", null));
 		}
+
+        [Test]
+        public void testFilterIsUsed()
+        {
+
+        }
 	}
 }
