@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCD-SalaryIncrease", "SCD-SalaryIncrease.csproj", "{C3D4018F-EE13-417B-8315-80F0A129E04B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowProject", "SpecFlowProject\SpecFlowProject.csproj", "{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C3D4018F-EE13-417B-8315-80F0A129E04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D4018F-EE13-417B-8315-80F0A129E04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3D4018F-EE13-417B-8315-80F0A129E04B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBA75F9-22A0-4316-A5FC-3B5602848EFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
