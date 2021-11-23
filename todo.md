@@ -1,5 +1,6 @@
 ﻿# Todo List
 
+- Continue working on implementing MemoryEmployeeRepository and Tests
 - Continue writing SpecFlow Gherkin tests.
 - Check if the filter is applied.
 - Specify Test for the case where "EmployeeRepository".get doesn't return any Employees
