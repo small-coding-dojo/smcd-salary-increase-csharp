@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using SCD_SalaryIncrease;
 using System;
+using System.Linq;
+using FluentAssertions;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowProject.Steps
@@ -18,23 +20,22 @@ namespace SpecFlowProject.Steps
         [Given(@"there is an employee with email ""(.*)"" and id ""(.*)"" and salary (.*),")]
         public void GivenThereIsAnEmployeeWithEmailAndIdAndSalary(string p0, string p1, int p2)
         {
-            _scenarioContext.Pending();
+            //_scenarioContext.Pending();
         }
 
         [When(@"I Increase the Salary for ""(.*)"" by ""(.*)"" percent")]
         public void WhenIIncreaseTheSalaryForByPercent(string p0, string p1)
         {
-            _scenarioContext.Pending();
+            //_scenarioContext.Pending();
         }
 
         [Then(@"""(.*)"" salary is (.*)")]
-        public void ThenSalaryIs(string p0, int p1)
+        public void ThenSalaryIs(string email, int salary)
         {
             // will be called 2 times
-            _employeeRepository.Get(p=>p.Email == p0);
-
-
+            var employees = _employeeRepository.Get(p => p.Email == email);
+            employees.Count().Should().Be(1);
+            employees.First().CurrentSalary.Should().Be(salary);
         }
     }
 }
-
