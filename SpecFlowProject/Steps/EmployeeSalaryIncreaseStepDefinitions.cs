@@ -10,6 +10,10 @@ using System.Collections.Generic;
 
 namespace SpecFlowProject.Steps
 {
+    internal class MemoryEmployeeRepositoryTests
+    {
+
+    }
     internal class MemoryEmployeeRepository : IRepository<Employee>
     {
         public Employee GetById(int id) 
@@ -18,7 +22,7 @@ namespace SpecFlowProject.Steps
         }
 		public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
         {
-            return null;
+            return new List<Employee>();
         }
 		public Employee Update(Employee entity)
         {
