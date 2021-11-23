@@ -12,10 +12,18 @@ namespace SpecFlowProject.Steps
 {
     internal class MemoryEmployeeRepositoryTests
     {
+        private MemoryEmployeeRepository _repository;
 
+        [Test]
+        public void InsertTest() // Michael doesn't like this name
+        {
+            Assert.AreEqual(1,_repository._list.Count());
+        }
     }
     internal class MemoryEmployeeRepository : IRepository<Employee>
     {
+        public List<Employee> _list;
+
         public Employee GetById(int id) 
         {
             return null;
