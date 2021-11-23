@@ -12,17 +12,19 @@ namespace SpecFlowProject.Steps
 {
     internal class MemoryEmployeeRepositoryTests
     {
-        private MemoryEmployeeRepository _repository;
+        private MemoryEmployeeRepository _repository = new MemoryEmployeeRepository();
 
         [Test]
         public void InsertTest() // Michael doesn't like this name
         {
+            _repository.Insert(new Employee() { });
+
             Assert.AreEqual(1,_repository._list.Count());
         }
     }
     internal class MemoryEmployeeRepository : IRepository<Employee>
     {
-        public List<Employee> _list;
+        internal List<Employee> _list = new List<Employee>();
 
         public Employee GetById(int id) 
         {
@@ -36,9 +38,10 @@ namespace SpecFlowProject.Steps
         {
             return null;
         }
-		public Employee Insert(Employee entity)
+		public Employee Insert(Employee employee)
         {
-            return null;
+            _list.Add(employee);
+            return employee;
         }
 		public void Insert(int id)
         {
