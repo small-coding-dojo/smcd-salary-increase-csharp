@@ -4,9 +4,37 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using TechTalk.SpecFlow;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+
 
 namespace SpecFlowProject.Steps
 {
+    internal class MemoryEmployeeRepository : IRepository<Employee>
+    {
+        public Employee GetById(int id) 
+        {
+            return null;
+        }
+		public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
+        {
+            return null;
+        }
+		public Employee Update(Employee entity)
+        {
+            return null;
+        }
+		public Employee Insert(Employee entity)
+        {
+            return null;
+        }
+		public void Insert(int id)
+        {
+
+        }
+    }
+
+
     [Binding]
     public class EmployeeSalaryIncreaseStepDefinitions
     {
@@ -16,6 +44,7 @@ namespace SpecFlowProject.Steps
         public EmployeeSalaryIncreaseStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
+            _employeeRepository = new MemoryEmployeeRepository();
         }
         [Given(@"there is an employee with email ""(.*)"" and id ""(.*)"" and salary (.*),")]
         public void GivenThereIsAnEmployeeWithEmailAndIdAndSalary(string p0, string p1, int p2)
