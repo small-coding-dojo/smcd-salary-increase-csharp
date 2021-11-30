@@ -1,55 +1,12 @@
-﻿using NUnit.Framework;
-using SCD_SalaryIncrease;
-using System;
+﻿using SCD_SalaryIncrease;
 using System.Linq;
 using FluentAssertions;
+using SpecFlowProject.MemoryRepository;
 using TechTalk.SpecFlow;
-using System.Linq.Expressions;
-using System.Collections.Generic;
 
 
 namespace SpecFlowProject.Steps
 {
-    internal class MemoryEmployeeRepositoryTests
-    {
-        private MemoryEmployeeRepository _repository = new MemoryEmployeeRepository();
-
-        [Test]
-        public void InsertTest() // Michael doesn't like this name
-        {
-            _repository.Insert(new Employee() { });
-
-            Assert.AreEqual(1,_repository._list.Count());
-        }
-    }
-    internal class MemoryEmployeeRepository : IRepository<Employee>
-    {
-        internal List<Employee> _list = new List<Employee>();
-
-        public Employee GetById(int id) 
-        {
-            return null;
-        }
-		public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
-        {
-            return new List<Employee>();
-        }
-		public Employee Update(Employee entity)
-        {
-            return null;
-        }
-		public Employee Insert(Employee employee)
-        {
-            _list.Add(employee);
-            return employee;
-        }
-		public void Insert(int id)
-        {
-
-        }
-    }
-
-
     [Binding]
     public class EmployeeSalaryIncreaseStepDefinitions
     {
