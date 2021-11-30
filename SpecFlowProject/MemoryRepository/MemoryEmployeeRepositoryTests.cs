@@ -14,7 +14,17 @@ namespace SpecFlowProject.MemoryRepository
         {
             _repository.Insert(new Employee() { });
 
-            Assert.AreEqual(1,_repository._list.Count());
+            Assert.AreEqual(1, _repository._list.Count());
+        }
+
+        [Test]
+        public void GetTest() // Michael doesn't like this name
+        {
+            var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
+
+            var actualEmployee = _repository.Get(p => true).First();
+            
+            Assert.AreSame(expectedEmployee, actualEmployee);
         }
     }
 }
