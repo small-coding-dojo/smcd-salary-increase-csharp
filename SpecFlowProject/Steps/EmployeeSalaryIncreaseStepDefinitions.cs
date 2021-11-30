@@ -23,7 +23,6 @@ namespace SpecFlowProject.Steps
         public void GivenThereIsAnEmployeeWithEmailAndIdAndSalary(string p0, string p1, int p2)
         {
             var employee = new Employee { Email= p0, Id=int.Parse (p1), CurrentSalary=p2};
-            //_scenarioContext.Pending();
             _employeeRepository.Insert(employee);
         }
 

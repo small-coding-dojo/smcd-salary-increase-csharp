@@ -29,11 +29,11 @@ namespace SpecFlowProject.MemoryRepository
             // Given Repository Contains One Employee
             var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
             _repository.Insert(expectedEmployee);
-            
-            // When Get
-            var actualEmployee = _repository.Get(p => true).First();
 
-            // Then Return That Employee
+            //When we call Get with a true selector 
+            var actualEmployee = _repository.Get(p => true).First();
+            
+            // Then it Returns That Employee
             Assert.AreSame(expectedEmployee, actualEmployee);
         }
     }

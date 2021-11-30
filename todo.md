@@ -1,8 +1,10 @@
 ﻿# Todo List
 
+- Rename parameters of the methods in the step file
 - Continue working on implementing MemoryEmployeeRepository and Tests
+  - Implement the filter for the Get method
+  - Rename the InsertTest
 - Continue writing SpecFlow Gherkin tests.
-- Check if the filter is applied.
 - Specify Test for the case where "EmployeeRepository".get doesn't return any Employees
 - make actual a field in the test class
 - remove single parameter constructor of EmployeeSalaryIncrease
