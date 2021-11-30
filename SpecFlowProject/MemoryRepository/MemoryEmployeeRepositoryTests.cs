@@ -26,15 +26,14 @@ namespace SpecFlowProject.MemoryRepository
         [Test]
         public void Get_RepositoryContainsOneEmployee_ReturnsThatEmployee() // Michael doesn't like this name
         {
-
-
-            var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
-
             // Given Repository Contains One Employee
-             _repository.Insert(expectedEmployee);
-//WhenGetThenReturnsThatEmployee
-            var actualEmployee = _repository.Get(p => true).First();
+            var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
+            _repository.Insert(expectedEmployee);
             
+            // When Get
+            var actualEmployee = _repository.Get(p => true).First();
+
+            // Then Return That Employee
             Assert.AreSame(expectedEmployee, actualEmployee);
         }
     }
