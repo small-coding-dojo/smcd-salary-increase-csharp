@@ -9,6 +9,11 @@ namespace SpecFlowProject.MemoryRepository
     {
         private MemoryEmployeeRepository _repository = new MemoryEmployeeRepository();
 
+        public MemoryEmployeeRepositoryTests(MemoryEmployeeRepository repository)
+        {
+            _repository = repository;
+        }
+
         [Test]
         public void InsertTest() // Michael doesn't like this name
         {
@@ -21,6 +26,7 @@ namespace SpecFlowProject.MemoryRepository
         public void GetTest() // Michael doesn't like this name
         {
             var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
+            _repository.Insert(expectedEmployee);
 
             var actualEmployee = _repository.Get(p => true).First();
             
