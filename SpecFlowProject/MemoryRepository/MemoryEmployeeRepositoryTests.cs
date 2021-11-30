@@ -7,11 +7,12 @@ namespace SpecFlowProject.MemoryRepository
 {
     internal class MemoryEmployeeRepositoryTests
     {
-        private MemoryEmployeeRepository _repository = new MemoryEmployeeRepository();
+        private MemoryEmployeeRepository _repository;
 
-        public MemoryEmployeeRepositoryTests(MemoryEmployeeRepository repository)
+        [SetUp]
+        public void Setup()
         {
-            _repository = repository;
+            _repository = new MemoryEmployeeRepository();
         }
 
         [Test]
@@ -23,11 +24,15 @@ namespace SpecFlowProject.MemoryRepository
         }
 
         [Test]
-        public void GetTest() // Michael doesn't like this name
+        public void Get_RepositoryContainsOneEmployee_ReturnsThatEmployee() // Michael doesn't like this name
         {
-            var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
-            _repository.Insert(expectedEmployee);
 
+
+            var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
+
+            // Given Repository Contains One Employee
+             _repository.Insert(expectedEmployee);
+//WhenGetThenReturnsThatEmployee
             var actualEmployee = _repository.Get(p => true).First();
             
             Assert.AreSame(expectedEmployee, actualEmployee);

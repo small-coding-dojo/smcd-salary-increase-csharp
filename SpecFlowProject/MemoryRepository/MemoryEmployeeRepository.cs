@@ -15,7 +15,7 @@ namespace SpecFlowProject.MemoryRepository
         }
         public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
         {
-            return new List<Employee>();
+            return _list;
         }
         public Employee Update(Employee entity)
         {
