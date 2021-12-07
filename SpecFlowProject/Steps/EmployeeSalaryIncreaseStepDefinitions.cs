@@ -3,7 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using SpecFlowProject.MemoryRepository;
 using TechTalk.SpecFlow;
-
+using Moq;
 
 namespace SpecFlowProject.Steps
 {
@@ -27,9 +27,11 @@ namespace SpecFlowProject.Steps
         }
 
         [When(@"I Increase the Salary for ""(.*)"" by ""(.*)"" percent")]
-        public void WhenIIncreaseTheSalaryForByPercent(string p0, string p1)
+        public void WhenIIncreaseTheSalaryForByPercent(string p0, decimal p1)
         {
-            //var increase = new EmployeeSalaryIncrease();
+            var notifyStub = new Mock<INotify>();
+            var increase = new EmployeeSalaryIncrease(notifyStub, _employeeRepository);
+            increase.IncreaseSalaryByEmail(p0, p1);
         }
 
         [Then(@"""(.*)"" salary is (.*)")]
