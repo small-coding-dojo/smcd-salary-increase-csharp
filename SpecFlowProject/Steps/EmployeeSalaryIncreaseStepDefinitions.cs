@@ -18,9 +18,11 @@ namespace SpecFlowProject.Steps
         }
 
         [Given(@"there is an employee with email ""(.*)"" and id ""(.*)"" and salary (.*),")]
-        public void GivenThereIsAnEmployeeWithEmailAndIdAndSalary(string p0, string p1, int p2)
+        public void GivenThereIsAnEmployeeWithEmailAndIdAndSalary(string email, int id, int salary)
+        
+        
         {
-            var employee = new Employee { Email= p0, Id=int.Parse (p1), CurrentSalary=p2};
+            var employee = new Employee { Email= email, Id=id, CurrentSalary=salary};
             _employeeRepository.Insert(employee);
         }
 
