@@ -5,7 +5,7 @@ using Microsoft.VisualBasic;
 using Moq;
 
 namespace SCD_SalaryIncrease
-{
+{ 
 	internal class EmployeeSalaryIncrease : IEmployeeSalaryIncrease
 	{
 		private readonly INotify _notify;

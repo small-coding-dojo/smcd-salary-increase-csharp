@@ -29,7 +29,7 @@ namespace SpecFlowProject.Steps
         [When(@"I Increase the Salary for ""(.*)"" by ""(.*)"" percent")]
         public void WhenIIncreaseTheSalaryForByPercent(string p0, string p1)
         {
-            //_scenarioContext.Pending();
+            //var increase = new EmployeeSalaryIncrease();
         }
 
         [Then(@"""(.*)"" salary is (.*)")]
