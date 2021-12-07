@@ -27,11 +27,11 @@ namespace SpecFlowProject.Steps
         }
 
         [When(@"I Increase the Salary for ""(.*)"" by ""(.*)"" percent")]
-        public void WhenIIncreaseTheSalaryForByPercent(string p0, decimal p1)
+        public void WhenIIncreaseTheSalaryForByPercent(string email, decimal percent)
         {
             var notifyStub = new Mock<INotify>();
             var increase = new EmployeeSalaryIncrease(notifyStub.Object, _employeeRepository);
-            increase.IncreaseSalaryByEmail(p0, p1);
+            increase.IncreaseSalaryByEmail(email, percent);
         }
 
         [Then(@"""(.*)"" salary is (.*)")]

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Moq;
 using FluentAssertions;
 
-namespace SCD_SalaryIncrease
+namespace SCD_SalaryIncrease.Tests
 {
 	public class EmployeeSalaryIncreaseTests
 	{

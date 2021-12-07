@@ -16,7 +16,7 @@ namespace SpecFlowProject.MemoryRepository
         }
 
         [Test]
-        public void InsertTest() // Michael doesn't like this name
+        public void Insert_RepositoryIsEmpty_AddsOneEntry() 
         {
             _repository.Insert(new Employee() { });
 
@@ -24,7 +24,7 @@ namespace SpecFlowProject.MemoryRepository
         }
 
         [Test]
-        public void Get_RepositoryContainsOneEmployee_ReturnsThatEmployee() // Michael doesn't like this name
+        public void Get_RepositoryContainsOneEmployee_ReturnsThatEmployee()
         {
             // Given Repository Contains One Employee
             var expectedEmployee = new Employee { Id = 1, Email = "lorem@ipsum.com", CurrentSalary = 1 };
@@ -40,7 +40,6 @@ namespace SpecFlowProject.MemoryRepository
         [Test]
         public void Get_RepositoryContainsTwoEmployees_ReturnsTheSelectedEmployeeOnly()
         {
-
             _repository.Insert(new Employee() {CurrentSalary = 1234, Email = "Michael@example.com", Id = 1});
             _repository.Insert(new Employee() {CurrentSalary = 1235, Email = "john@example.com", Id = 2});
             _repository.Insert(new Employee() {CurrentSalary = 1236, Email = "Michael@example.com", Id = 3});
