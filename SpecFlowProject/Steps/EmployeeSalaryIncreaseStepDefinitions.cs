@@ -10,12 +10,10 @@ namespace SpecFlowProject.Steps
     [Binding]
     public class EmployeeSalaryIncreaseStepDefinitions
     {
-        private readonly ScenarioContext _scenarioContext;
         private IRepository<Employee> _employeeRepository;
 
         public EmployeeSalaryIncreaseStepDefinitions(ScenarioContext scenarioContext)
         {
-            _scenarioContext = scenarioContext;
             _employeeRepository = new MemoryEmployeeRepository();
         }
 
@@ -30,7 +28,7 @@ namespace SpecFlowProject.Steps
         public void WhenIIncreaseTheSalaryForByPercent(string p0, decimal p1)
         {
             var notifyStub = new Mock<INotify>();
-            var increase = new EmployeeSalaryIncrease(notifyStub, _employeeRepository);
+            var increase = new EmployeeSalaryIncrease(notifyStub.Object, _employeeRepository);
             increase.IncreaseSalaryByEmail(p0, p1);
         }
 
