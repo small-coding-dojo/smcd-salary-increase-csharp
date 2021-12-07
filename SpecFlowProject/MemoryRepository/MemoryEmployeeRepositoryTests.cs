@@ -36,5 +36,14 @@ namespace SpecFlowProject.MemoryRepository
             // Then it Returns That Employee
             Assert.AreSame(expectedEmployee, actualEmployee);
         }
+
+        [Test]
+        public void Get_RepositoryContainsTwoEmployees_ReturnsTheSelectedEmployeeOnly()
+        {
+            var employees = _repository.Get(x => x.Email == "john@example.com");
+
+            Assert.Equals(1, employees.Count());
+            Assert.Equals(2, employees.First().Id);
+        }
     }
 }
