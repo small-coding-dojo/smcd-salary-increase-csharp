@@ -40,10 +40,15 @@ namespace SpecFlowProject.MemoryRepository
         [Test]
         public void Get_RepositoryContainsTwoEmployees_ReturnsTheSelectedEmployeeOnly()
         {
+
+            _repository.Insert(new Employee() {CurrentSalary = 1234, Email = "Michael@example.com", Id = 1});
+            _repository.Insert(new Employee() {CurrentSalary = 1235, Email = "john@example.com", Id = 2});
+            _repository.Insert(new Employee() {CurrentSalary = 1236, Email = "Michael@example.com", Id = 3});
+
             var employees = _repository.Get(x => x.Email == "john@example.com");
 
-            Assert.Equals(1, employees.Count());
-            Assert.Equals(2, employees.First().Id);
+            Assert.AreEqual(1, employees.Count());
+            Assert.AreEqual(2, employees.First().Id);
         }
     }
 }

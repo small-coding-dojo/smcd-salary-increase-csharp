@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using SCD_SalaryIncrease;
 
@@ -15,7 +16,7 @@ namespace SpecFlowProject.MemoryRepository
         }
         public IEnumerable<Employee> Get(Expression<Func<Employee, bool>> filter)
         {
-            return _list;
+            return _list.Where(filter.Compile());
         }
         public Employee Update(Employee entity)
         {
